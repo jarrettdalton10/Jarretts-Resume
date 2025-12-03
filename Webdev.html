@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jarrett Dalton - Supply Chain Portfolio</title>
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <style>
+        /* --- CUSTOM STYLES (Satisfies 'Scratch' Requirements) --- */
+        
+        body {
+            background-color: #f8f9fa;
+            overflow-x: hidden;
+        }
+
+        /* --- HERO & RESUME STYLES --- */
+        .hero-section {
+            background: linear-gradient(rgba(0, 33, 71, 0.9), rgba(0, 33, 71, 0.8)), url('https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 100px 0;
+            margin-bottom: 2rem;
+            border-bottom: 5px solid #002E5D;
+        }
+
+        .section-title {
+            border-bottom: 2px solid #002E5D; /* BYU Navy */
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+
+        /* --- HOBBY TAB STYLES --- */
+        #hobby-pane {
+            background-color: #f0f8ff; /* AliceBlue Custom Background */
+            padding: 40px;
+            min-height: 100vh;
+        }
+
+        .hobby-content {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .nested-list-box {
+            background-color: #e9ecef;
+            padding: 20px;
+            margin: 20px 0;
+            border-left: 5px solid #28a745;
+        }
+
+        /* --- TABLEAU TAB STYLES --- */
+        #tableau-pane {
+            background-color: #ffffff;
+            padding: 50px 0;
+            min-height: 100vh;
+        }
+
+        /* --- GAME TAB STYLES --- */
+        #game-pane {
+            background-color: #2c3e50;
+            color: white;
+            padding: 50px 0;
+            min-height: 100vh;
+            text-align: center;
+        }
+
+        canvas {
+            border: 4px solid #34495e;
+            background-color: #000;
+            box-shadow: 0 0 20px rgba(0,0,0,0.5);
+            margin: 20px auto;
+            display: block;
+            max-width: 100%;
+        }
+
+        #startBtn, #resetBtn {
+            padding: 10px 25px;
+            font-size: 18px;
+            cursor: pointer;
+            background-color: #e67e22;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            margin: 10px;
+            font-weight: bold;
+        }
+        #startBtn:hover { background-color: #d35400; }
+        #resetBtn { background-color: #c0392b; display: none; }
+        
+        /* Fix for Tab Navigation appearance */
+        .nav-tabs .nav-link { color: #495057; font-weight: 500; }
+        .nav-tabs .nav-link.active {
+            color: #002E5D;
+            font-weight: bold;
+            border-top: 3px solid #002E5D;
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top shadow">
+        <div class="container">
+            <a class="navbar-brand" href="#">Jarrett Dalton</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto nav nav-pills" id="myTab" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active text-white" id="home-tab" data-bs-toggle="tab" data-bs-target="#professional-pane" type="button" role="tab">Resume</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link text-white" id="hobby-tab" data-bs-toggle="tab" data-bs-target="#hobby-pane" type="button" role="tab">Hobbies</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link text-white" id="tableau-tab" data-bs-toggle="tab" data-bs-target="#tableau-pane" type="button" role="tab">Supply Chain Data</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link text-white" id="game-tab" data-bs-toggle="tab" data-bs-target="#game-pane" type="button" role="tab" onclick="pauseGameIfRunning()">Play Game</button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="tab-content" id="myTabContent">
+
+        <div class="tab-pane fade show active" id="professional-pane" role="tabpanel" aria-labelledby="home-tab">
+            
+            <header class="hero-section text-center">
+                <div class="container">
+                    <h1 class="display-4 fw-bold">Jarrett Dalton</h1>
+                    <p class="lead">Aspiring Global Supply Chain Manager | BYU Student</p>
+                </div>
+            </header>
+
+            <div class="container mb-5">
+                <div class="row">
+                    <div class="col-lg-8 mx-auto text-center mb-5">
+                        <h2 class="section-title">Objective</h2>
+                        <p class="lead">
+                            Hard-working college student with proven creative thinking and communication skills. 
+                            I am currently enrolled at BYU pursuing Global Supply Chain Management and fluency in Spanish.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <h3 class="h4 mb-3">Experience</h3>
+                        
+                        <div class="card mb-3 shadow-sm border-0">
+                            <div class="card-body">
+                                <h5 class="card-title text-primary">Pickup Department Lead</h5>
+                                <h6 class="card-subtitle mb-2 text-muted">Fred Meyer | Jan 2022 - June 2022</h6>
+                                <ul>
+                                    <li>Developed leadership skills like conflict resolution and effective communication.</li>
+                                    <li>Ensured operational efficiency and maintained departmental tidiness.</li>
+                                    <li>Previously served as Grocery Picker (May 2020 - Jan 2022).</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="card mb-3 shadow-sm border-0">
+                            <div class="card-body">
+                                <h5 class="card-title text-primary">HVAC Technician Assistant</h5>
+                                <h6 class="card-subtitle mb-2 text-muted">Stone Heating and Air | Sep 2020 - Aug 2023</h6>
+                                <ul>
+                                    <li>Worked in active, stressful environments assisting install crews.</li>
+                                    <li>Learned organization and resilience in tight workspaces.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <h3 class="h4 mb-3">Education</h3>
+                        <div class="card mb-3 shadow-sm border-0">
+                            <div class="card-body">
+                                <h5 class="card-title text-primary">Brigham Young University</h5>
+                                <p class="card-text">Pre-Business | Global Supply Chain Focus.</p>
+                            </div>
+                        </div>
+                        <div class="card mb-3 shadow-sm border-0">
+                            <div class="card-body">
+                                <h5 class="card-title text-primary">Logos High School / RCC</h5>
+                                <p class="card-text">High School Diploma (2022) | GPA: 3.6.</p>
+                                <p class="small text-muted">Principal's List Honors.</p>
+                            </div>
+                        </div>
+
+                        <h3 class="h4 mb-3 mt-4">Skills</h3>
+                        <ul class="list-group">
+                            <li class="list-group-item">Fluent in Spanish (Dominican Republic Mission)</li>
+                            <li class="list-group-item">Hard Worker & Reliable</li>
+                            <li class="list-group-item">Team Player</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <footer class="bg-light text-center py-4 mt-5">
+                <p class="mb-0 text-muted">&copy; 2025 Jarrett Dalton | Resume Section</p>
+            </footer>
+        </div>
+
+        <div class="tab-pane fade" id="hobby-pane" role="tabpanel" aria-labelledby="hobby-tab">
+            <div class="container hobby-content">
+                <h2 style="color: #002E5D; text-align: center;">My Passion: Golf & The Outdoors</h2>
+                <p class="text-center">When I am not studying supply chain mechanics, I love being outdoors, specifically on the golf course.</p>
+
+                <img src="https://images.unsplash.com/photo-1535131749006-b7f58c99034b?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" 
+                     alt="Golf Course" class="img-fluid rounded mb-3 d-block mx-auto">
+
+                <div class="nested-list-box">
+                    <h4>How to Improve Your Swing</h4>
+                    <ol>
+                        <li>Stance and Grip
+                            <ul>
+                                <li>Keep feet shoulder-width apart.</li>
+                                <li>Interlock or overlap your fingers.</li>
+                            </ul>
+                        </li>
+                        <li>The Backswing
+                            <ul>
+                                <li>Rotate shoulders fully.</li>
+                                <li>Keep eye on the ball.</li>
+                            </ul>
+                        </li>
+                    </ol>
+                </div>
+
+                <p><a href="#" onclick="document.getElementById('home-tab').click()">Click here to jump back to Resume Tab</a> (Anchor Link)</p>
+
+                <h4>Golf Basics: Simple Swing Tips</h4>
+                <div class="ratio ratio-16x9 mb-4">
+                  <iframe 
+    width="560" 
+    height="315" 
+    src="https://www.youtube.com/embed/NEAjqUDYItw?si=h8EE4c7heCDPBNCx" 
+    title="YouTube video player" 
+    frameborder="0" 
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+    referrerpolicy="strict-origin-when-cross-origin" 
+    allowfullscreen>
+</iframe>
+                </div>
+            </div>
+        </div>
+
+        <div class="tab-pane fade" id="tableau-pane" role="tabpanel" aria-labelledby="tableau-tab">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12 text-center mb-4">
+                        <h2 class="section-title">Global Supply Chain Data</h2>
+                        <p class="lead">Interactive visualization of Sales, Profit, and Shipping Logistics.</p>
+                    </div>
+                </div>
+
+                <div class='tableauPlaceholder' id='viz1733220000000' style='position: relative; margin: 0 auto;'>
+                    <noscript>
+                        <a href='#'><img alt='Global Supply Chain' src='https://public.tableau.com/static/images/Su/Superstore_embedded_800x800/Overview/1.png' style='border: none' /></a>
+                    </noscript>
+                    <object class='tableauViz' style='display:none;'>
+                        <param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' /> 
+                        <param name='embed_code_version' value='3' /> 
+                        <param name='site_root' value='' />
+                        <param name='name' value='Superstore_embedded_800x800/Overview' />
+                        <param name='tabs' value='no' />
+                        <param name='toolbar' value='yes' />
+                        <param name='animate_transition' value='yes' />
+                        <param name='display_static_image' value='yes' />
+                        <param name='display_spinner' value='yes' />
+                        <param name='display_overlay' value='yes' />
+                        <param name='display_count' value='yes' />
+                    </object>
+                </div>
+                <script type='text/javascript'>                    
+                    var divElement = document.getElementById('viz1733220000000');                    
+                    var vizElement = divElement.getElementsByTagName('object')[0];                    
+                    vizElement.style.width='100%';vizElement.style.height='850px';                    
+                    var scriptElement = document.createElement('script');                    
+                    scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js';                    
+                    vizElement.parentNode.insertBefore(scriptElement, vizElement);                
+                </script>
+            </div>
+        </div>
+
+        <div class="tab-pane fade" id="game-pane" role="tabpanel" aria-labelledby="game-tab">
+            <div class="container">
+                <h2 class="text-uppercase" style="letter-spacing: 2px;">Supply Chain Logistics Game</h2>
+                <div id="scoreBoard" class="h4 text-warning mb-3">Cargo Delivered: 0</div>
+                
+                <canvas id="gameCanvas" width="400" height="400"></canvas>
+                
+                <div class="mt-3">
+                    <button id="startBtn" onclick="startGame()">Start Game</button>
+                    <button id="resetBtn" onclick="resetGame()">Reset Game</button>
+                </div>
+
+                <div class="mt-3 p-3 d-inline-block rounded text-start" style="background: rgba(0,0,0,0.3); max-width: 400px;">
+                    <p class="mb-1"><strong>Mission:</strong> Collect the Orange Cargo crates to build your supply chain.</p>
+                    <p class="mb-0"><strong>Controls:</strong> Click "Start Game", then use <strong>Arrow Keys</strong> to drive the truck.</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        const canvas = document.getElementById("gameCanvas");
+        const ctx = canvas.getContext("2d");
+        const box = 20; 
+        
+        let truck = [];
+        let cargo = {};
+        let score = 0;
+        let d = null; 
+        let gameInterval;
+        let isGameRunning = false;
+
+        canvas.width = 400;
+        canvas.height = 400;
+
+        function initGame() {
+            ctx.fillStyle = "#34495e"; 
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = "white";
+            ctx.font = "20px Arial";
+            ctx.textAlign = "center";
+            ctx.fillText("Click 'Start Game' below", canvas.width/2, canvas.height/2);
+        }
+
+        setTimeout(initGame, 100); 
+
+        function pauseGameIfRunning() {
+            // Placeholder for pause logic
+        }
+
+        function startGame() {
+            if(isGameRunning) return;
+            
+            document.getElementById("startBtn").style.display = "none";
+            document.getElementById("resetBtn").style.display = "inline-block";
+
+            truck = [];
+            truck[0] = { x: 9 * box, y: 10 * box };
+            
+            cargo = {
+                x: Math.floor(Math.random() * 19 + 1) * box,
+                y: Math.floor(Math.random() * 19 + 1) * box
+            };
+            
+            score = 0;
+            d = null; 
+            document.getElementById("scoreBoard").innerText = "Cargo Delivered: 0";
+            
+            isGameRunning = true;
+            document.addEventListener("keydown", direction);
+            gameInterval = setInterval(draw, 100);
+            
+            window.focus();
+            document.getElementById("gameCanvas").scrollIntoView({behavior: "smooth", block: "center"});
+        }
+
+        function resetGame() {
+            clearInterval(gameInterval);
+            isGameRunning = false;
+            document.removeEventListener("keydown", direction);
+            document.getElementById("startBtn").style.display = "inline-block";
+            document.getElementById("resetBtn").style.display = "none";
+            initGame();
+        }
+
+        function direction(event) {
+            if([37, 38, 39, 40].indexOf(event.keyCode) > -1) {
+                event.preventDefault();
+            }
+            if (event.keyCode == 37 && d != "RIGHT") d = "LEFT";
+            else if (event.keyCode == 38 && d != "DOWN") d = "UP";
+            else if (event.keyCode == 39 && d != "LEFT") d = "RIGHT";
+            else if (event.keyCode == 40 && d != "UP") d = "DOWN";
+        }
+
+        function collision(head, array) {
+            for (let i = 0; i < array.length; i++) {
+                if (head.x == array[i].x && head.y == array[i].y) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        function draw() {
+            if(!isGameRunning) return;
+
+            ctx.fillStyle = "#34495e"; 
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            for (let i = 0; i < truck.length; i++) {
+                ctx.fillStyle = (i == 0) ? "#3498db" : "#bdc3c7"; 
+                ctx.fillRect(truck[i].x, truck[i].y, box, box);
+                ctx.strokeStyle = "#2c3e50";
+                ctx.strokeRect(truck[i].x, truck[i].y, box, box);
+            }
+
+            ctx.fillStyle = "#e67e22"; 
+            ctx.fillRect(cargo.x, cargo.y, box, box);
+            ctx.strokeStyle = "#d35400";
+            ctx.strokeRect(cargo.x, cargo.y, box, box);
+
+            if(d == null) return;
+
+            let truckX = truck[0].x;
+            let truckY = truck[0].y;
+
+            if (d == "LEFT") truckX -= box;
+            if (d == "UP") truckY -= box;
+            if (d == "RIGHT") truckX += box;
+            if (d == "DOWN") truckY += box;
+
+            if (truckX == cargo.x && truckY == cargo.y) {
+                score++;
+                document.getElementById("scoreBoard").innerText = "Cargo Delivered: " + score;
+                cargo = {
+                    x: Math.floor(Math.random() * 19) * box,
+                    y: Math.floor(Math.random() * 19) * box
+                };
+            } else {
+                truck.pop(); 
+            }
+
+            let newHead = { x: truckX, y: truckY };
+
+            if (truckX < 0 || truckX >= canvas.width || truckY < 0 || truckY >= canvas.height || collision(newHead, truck)) {
+                clearInterval(gameInterval);
+                isGameRunning = false;
+                ctx.fillStyle = "rgba(0,0,0,0.75)";
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                ctx.fillStyle = "white";
+                ctx.font = "30px Arial";
+                ctx.textAlign = "center";
+                ctx.fillText("Supply Chain Broken!", canvas.width/2, canvas.height/2 - 20);
+                ctx.font = "20px Arial";
+                ctx.fillText("Score: " + score, canvas.width/2, canvas.height/2 + 20);
+                document.getElementById("startBtn").style.display = "none";
+                document.getElementById("resetBtn").style.display = "inline-block";
+                return;
+            }
+
+            truck.unshift(newHead);
+        }
+    </script>
+
+</body>
+</html>
